@@ -8,7 +8,7 @@ import picamera
 import cv2
 import numpy as np
 import argparse
-import math
+import math                           
 from tkinter import BOTH, LEFT,FLAT,SUNKEN,RAISED,GROOVE,RIDGE
 from tkinter import filedialog
 import calendar
@@ -55,7 +55,7 @@ answer=0
 
 camera = picamera.PiCamera()
 
-camera.resolution = (1920, 1080)
+camera.resolution = (800, 400)
 camera.preview_fullscreen=False
 
 camera.preview_window=(270,60, 350, 300)
@@ -80,10 +80,44 @@ def capturebank():
     date = datetime.datetime.now().strftime("%m_%d_%Y_%H_%M_%S")
     camera.capture('/home/pi/Desktop/backup/Cam/photo/blank.jpg')
     camera.capture('/home/pi/Desktop/Image sample microplastic/'+'(Blank)'+date+'.jpg')
+
+def mousePoints(event,x,y,flags,params):
+    global xdl1,ydl1
+    global xdl2,ydl2
+    sumred = 0
+    sumgreen = 0
+    sumblue = 0
+    global r1,g1,b1
+    global r2,g2,b2
+    global r3,g3,b3
+    global r4,g4,b4
+    global redb,greenb,blueb
+    
+    if event == cv2.EVENT_LBUTTONDOWN:
+        
+        print(x,y)
+        xdl1=y
+        ydl1=x
+        
+
+def posblank():
+    
+    
+    img = cv2.imread('/home/pi/Desktop/backup/Cam/photo/image2.jpg')
+    cv2.imshow("Original img", img)
+    cv2.setMouseCallback("Original img",mousePoints)
+    
+    xdl=xdl2
+    ydl=ydl2
+    display_time4()
+    display_time5()
+    display_time6()
+    cv2.waitKey(0)
     
     
 def blank():
     global xdl2,ydl2
+    
     sumred = 0
     sumgreen = 0
     sumblue = 0
@@ -777,7 +811,7 @@ button4 = Button(root, text="Measure", fg="white",font=("Helvetica", 12), bg='gr
 
 button6 = Button(root, text=" Position", fg="black",font=("Helvetica", 12), bg='#CCFFCC',command=lambda:[clicker(),streamoff()] ,borderwidth=3).place(x=120,y=100)
 
-button7 = Button(root, text="   Clear   ", fg="white",font=("Helvetica", 12), bg='#606060',command=clear,borderwidth=3).place(x=10,y=220)
+button7 = Button(root, text="   Clear   ", fg="white",font=("Helvetica", 12), bg='#606060',command=posblank,borderwidth=3).place(x=10,y=220)
 
 button10 = Button(root, text="   Blank  ",fg="white",font=("Helvetica", 12), bg='blue',command=capturebank,borderwidth=3).place(x=10,y=140)
 
