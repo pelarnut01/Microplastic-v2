@@ -81,9 +81,9 @@ def capturebank():
     camera.capture('/home/pi/Desktop/backup/Cam/photo/blank.jpg')
     camera.capture('/home/pi/Desktop/Image sample microplastic/'+'(Blank)'+date+'.jpg')
 
-def mousePoints(event,x,y,flags,params):
+def mousePointsample(event,x,y,flags,params):
     global xdl1,ydl1
-    global xdl2,ydl2
+    
     sumred = 0
     sumgreen = 0
     sumblue = 0
@@ -100,15 +100,129 @@ def mousePoints(event,x,y,flags,params):
         ydl1=x
         
 
-def posblank():
+def possample():
     
     
     img = cv2.imread('/home/pi/Desktop/backup/Cam/photo/image2.jpg')
     cv2.imshow("Original img", img)
-    cv2.setMouseCallback("Original img",mousePoints)
+    cv2.setMouseCallback("Original img",mousePointsample)
     
-    xdl=xdl2
-    ydl=ydl2
+    display_time4()
+    display_time5()
+    display_time6()
+    cv2.waitKey(0)
+
+
+
+def sample():
+    global xdl1,ydl1
+    sumred = 0
+    sumgreen = 0
+    sumblue = 0
+    global r1,g1,b1
+    global r2,g2,b2
+    global r3,g3,b3
+    global r4,g4,b4
+    global reds,greens,blues
+    image = cv2.imread('/home/pi/Desktop/backup/Cam/photo/image2.jpg')
+    
+    xdl=xdl1
+    ydl=ydl1
+    #cv2.circle(image,(ydl,xdl),2,(0,0,255),3)
+    #cv2.circle(image,(ydl+10,xdl),2,(0,0,255),3)
+    #cv2.circle(image,(ydl-10,xdl),2,(0,0,255),3)
+    #cv2.circle(image,(ydl,xdl+10),2,(0,0,255),3)
+    #cv2.circle(image,(ydl,xdl-10),2,(0,0,255),3)
+    print("Top left")
+
+
+    ##move dot up
+    for i in range(10):
+        
+        b, g, r = image[xdl, ydl]
+        ydl-=1
+        sumred+=r
+        sumgreen+=g
+        sumblue+=b
+        
+    ##move dot down   
+    for i in range(10):
+        
+        b, g, r = image[xdl, ydl]
+        ydl+=1
+        sumred+=r
+        sumgreen+=g
+        sumblue+=b
+        
+    ##move dot left
+    for i in range(10):
+        b, g, r = image[xdl, ydl]
+        xdl-=1
+        sumred+=r
+        sumgreen+=g
+        sumblue+=b
+        
+    ##move dot right
+    for i in range(10):
+        b, g, r = image[xdl, ydl]
+        xdl+=1
+        sumred+=r
+        sumgreen+=g
+        sumblue+=b
+        
+        
+    reds = meanred1=(sumred/40)
+    greens = meangreen1=(sumgreen/40)
+    blues = meanblue1=(sumblue/40)
+
+    r1 = meanred1=(sumred/40)
+    g1 = meangreen1=(sumgreen/40)
+    b1 = meanblue1=(sumblue/40)
+
+    print("Meanred",reds)
+    print("Meangreen",greens)
+    print("Meanblue",blues)
+
+
+    
+
+    sumred=0 
+    sumgreen=0
+    sumblue=0
+ 
+    
+    display_time()
+    display_time2()
+    display_time3()
+
+
+def mousePointsblank(event,x,y,flags,params):
+    global xdl1,ydl1
+    global xdl2,ydl2
+    sumred = 0
+    sumgreen = 0
+    sumblue = 0
+    global r1,g1,b1
+    global r2,g2,b2
+    global r3,g3,b3
+    global r4,g4,b4
+    global redb,greenb,blueb
+    
+    if event == cv2.EVENT_LBUTTONDOWN:
+        
+        print(x,y)
+        xdl2=y
+        ydl2=x
+        
+
+def posblank():
+    
+    
+    img = cv2.imread('/home/pi/Desktop/backup/Cam/photo/blank.jpg')
+    cv2.imshow("Original img", img)
+    cv2.setMouseCallback("Original img",mousePointsblank)
+    
+    
     display_time4()
     display_time5()
     display_time6()
@@ -365,10 +479,12 @@ def checkblank():
     b3 = tk.Button(my_w_child, text=' Close ',bg='#FF4957',height=2,command=my_w_child.destroy).place(x=180,y=170)
     
     
-    b6 = tk.Button(my_w_child, text=' Position' ,bg='#E4EF3C',height=2,command=check2).place(x=10,y=170)
+    b6 = tk.Button(my_w_child, text=' Position' ,bg='#E4EF3C',height=2,command=posblank).place(x=10,y=170)
     
      
     b7 = tk.Button(my_w_child, text=' Submit ' ,bg='#31BF00',height=2,command=blank).place(x=95,y=170)
+    
+    
     
 def intensity():
     global reds,greens,blues
@@ -389,86 +505,7 @@ def intensity():
 
 
     
-def measurement1():
-    global xdl1,ydl1
-    sumred = 0
-    sumgreen = 0
-    sumblue = 0
-    global r1,g1,b1
-    global r2,g2,b2
-    global r3,g3,b3
-    global r4,g4,b4
-    global reds,greens,blues
-    image = cv2.imread('/home/pi/Desktop/backup/Cam/photo/image2.jpg')
-    
-    xdl=xdl1
-    ydl=ydl1
-    #cv2.circle(image,(ydl,xdl),2,(0,0,255),3)
-    #cv2.circle(image,(ydl+10,xdl),2,(0,0,255),3)
-    #cv2.circle(image,(ydl-10,xdl),2,(0,0,255),3)
-    #cv2.circle(image,(ydl,xdl+10),2,(0,0,255),3)
-    #cv2.circle(image,(ydl,xdl-10),2,(0,0,255),3)
-    print("Top left")
 
-
-    ##move dot up
-    for i in range(10):
-        
-        b, g, r = image[xdl, ydl]
-        ydl-=1
-        sumred+=r
-        sumgreen+=g
-        sumblue+=b
-        
-    ##move dot down   
-    for i in range(10):
-        
-        b, g, r = image[xdl, ydl]
-        ydl+=1
-        sumred+=r
-        sumgreen+=g
-        sumblue+=b
-        
-    ##move dot left
-    for i in range(10):
-        b, g, r = image[xdl, ydl]
-        xdl-=1
-        sumred+=r
-        sumgreen+=g
-        sumblue+=b
-        
-    ##move dot right
-    for i in range(10):
-        b, g, r = image[xdl, ydl]
-        xdl+=1
-        sumred+=r
-        sumgreen+=g
-        sumblue+=b
-        
-        
-    reds = meanred1=(sumred/40)
-    greens = meangreen1=(sumgreen/40)
-    blues = meanblue1=(sumblue/40)
-
-    r1 = meanred1=(sumred/40)
-    g1 = meangreen1=(sumgreen/40)
-    b1 = meanblue1=(sumblue/40)
-
-    print("Meanred",reds)
-    print("Meangreen",greens)
-    print("Meanblue",blues)
-
-
-    
-
-    sumred=0 
-    sumgreen=0
-    sumblue=0
- 
-    
-    display_time()
-    display_time2()
-    display_time3()
     
 
 
@@ -742,7 +779,7 @@ def right(x1):
     ydl1 = ydl1+x1
     print("X axis",xdl1 ,"Y axis",ydl1)
     
-def clicker():
+def checksample():
     
    
     my_w_child=Toplevel(root) # Child window 
@@ -773,10 +810,10 @@ def clicker():
     b3 = tk.Button(my_w_child, text=' Close ',bg='#FF4957',height=2,command=my_w_child.destroy).place(x=180,y=170)
     
     
-    b6 = tk.Button(my_w_child, text=' Position' ,bg='#E4EF3C',height=2,command=check1).place(x=10,y=170)
+    b6 = tk.Button(my_w_child, text=' Position' ,bg='#E4EF3C',height=2,command=possample).place(x=10,y=170)
     
      
-    b7 = tk.Button(my_w_child, text=' Submit ' ,bg='#31BF00',height=2,command=measurement1).place(x=95,y=170)
+    b7 = tk.Button(my_w_child, text=' Submit ' ,bg='#31BF00',height=2,command=sample).place(x=95,y=170)
     
     
 
@@ -809,9 +846,11 @@ button4 = Button(root, text="Measure", fg="white",font=("Helvetica", 12), bg='gr
 
 
 
-button6 = Button(root, text=" Position", fg="black",font=("Helvetica", 12), bg='#CCFFCC',command=lambda:[clicker(),streamoff()] ,borderwidth=3).place(x=120,y=100)
+button6 = Button(root, text=" Position", fg="black",font=("Helvetica", 12), bg='#CCFFCC',command=lambda:[checksample(),streamoff()] ,borderwidth=3).place(x=120,y=100)
 
-button7 = Button(root, text="   Clear   ", fg="white",font=("Helvetica", 12), bg='#606060',command=posblank,borderwidth=3).place(x=10,y=220)
+button7 = Button(root, text="   Clear   ", fg="white",font=("Helvetica", 12), bg='#606060',command=clear,borderwidth=3).place(x=10,y=220)
+
+
 
 button10 = Button(root, text="   Blank  ",fg="white",font=("Helvetica", 12), bg='blue',command=capturebank,borderwidth=3).place(x=10,y=140)
 
